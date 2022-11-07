@@ -287,7 +287,11 @@ public class Stopwatch implements ActionListener {
         }
 
         if (e.getSource() == startButton) {
-            pomoStart();
+            if (pomoTotalTimeMillis == 0 || longTotalTimeMillis == 0 || shortTotalTimeMillis == 0) {
+                JOptionPane.showMessageDialog(null,"You must enter the time before you start","Error",JOptionPane.ERROR_MESSAGE);
+            } else {
+                pomoStart();
+            }
             System.out.println("you press start button");
         }
 
