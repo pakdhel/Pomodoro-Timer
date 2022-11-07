@@ -124,7 +124,7 @@ public class Stopwatch implements ActionListener {
         title.setBackground(new Color(217, 85, 80, 0));
         title.setHorizontalAlignment(JTextField.CENTER);
 
-        pomoDescription.setText("POMO BREAK TIME (MINUTES)");
+        pomoDescription.setText("POMODORO TIME (MINUTES)");
         pomoDescription.setBounds(48,477,305,35);
         pomoDescription.setBorder(BorderFactory.createBevelBorder(1));
         pomoDescription.setOpaque(true);
@@ -155,14 +155,17 @@ public class Stopwatch implements ActionListener {
         setPomoField.setBounds(147,518,170,51);
         setPomoField.setBackground(new Color(217, 217, 217));
         setPomoField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        setPomoField.setText("25");
 
         setShortField.setBounds(562,518,170,51);
         setShortField.setBackground(new Color(217, 217, 217));
         setShortField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        setShortField.setText("5");
 
         setLongField.setBounds(977,518,170,51);
         setLongField.setBackground(new Color(217, 217, 217));
         setLongField.setFont(new Font("Consolas", Font.PLAIN, 20));
+        setLongField.setText("15");
 
         // BUTTON enter the time
         buttonPomoTime.setBounds(48,518,99,51);
