@@ -23,7 +23,6 @@ public class Stopwatch implements ActionListener {
     int pomoSeconds = 0, pomoMinutes = 0, pomoHours = 0;
     int shortSeconds = 0, shortMinutes = 0, shortHours = 0;
     int longSeconds = 0, longMinutes = 0, longHours = 0;
-    boolean started = false;
 
     String pomoSec_str = String.format("%02d", pomoSeconds);
     String pomoMin_str = String.format("%02d", pomoMinutes);
