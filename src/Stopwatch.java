@@ -1,9 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class Stopwatch implements ActionListener {
-    int totalShorTimes = 0; // total sudah berapa kali istirahat pendek
+    int totalPomoTimes = 0; // total sudah berapa kali istirahat pendek
     JFrame frame = new JFrame();
     JButton startButton = new JButton("START");
     JButton stopButton = new JButton("STOP");
@@ -43,8 +47,8 @@ public class Stopwatch implements ActionListener {
     JLabel pomoDescription = new JLabel();
     JLabel shortDescription = new JLabel();
     JLabel longDescription = new JLabel();
-
     JLabel title = new JLabel();
+    String audioFilePath = "D:\\Pomodoro Timer\\src\\rickastley.wav";
 
     Timer timerPomo = new Timer(1000, new ActionListener() {
 
@@ -63,6 +67,7 @@ public class Stopwatch implements ActionListener {
 
             if (pomoHours == 0 && pomoMinutes == 0 && pomoSeconds == 0) {
                 pomoStop();
+                playMusic(audioFilePath);
                 shortStart();
             }
         }
@@ -86,6 +91,7 @@ public class Stopwatch implements ActionListener {
 
             if (longHours == 0 && longMinutes == 0 && longSeconds == 0) {
                 longStop();
+                playMusic(audioFilePath);
             }
         }
     });
@@ -106,9 +112,10 @@ public class Stopwatch implements ActionListener {
             shortTimeLabel.setText(shortHours_str+":"+shortMin_str+":"+shortSec_str);
 
             if (shortHours == 0 && shortMinutes == 0 && shortSeconds == 0) {
-                totalShorTimes++;
+                totalPomoTimes++;
                 shortStop();
-                if (totalShorTimes % 4 == 0) {
+                playMusic(audioFilePath);
+                if (totalPomoTimes % 4 == 0) {
                     longStart();
                 }
             }
@@ -306,6 +313,23 @@ public class Stopwatch implements ActionListener {
 
     }
 
+    void playMusic(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (file.exists()) {
+                AudioInputStream audio = AudioSystem.getAudioInputStream(file);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audio);
+                clip.start();
+                JOptionPane.showMessageDialog(null,"Press OK to stop Alarm!");
+            } else {
+                System.out.println("Can't find the file");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void pomoStart() {
         timerPomo.start();
     }
@@ -326,5 +350,4 @@ public class Stopwatch implements ActionListener {
     void longStop() {
         timerLong.stop();
     }
-
 }
