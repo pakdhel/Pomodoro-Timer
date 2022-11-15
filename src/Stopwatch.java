@@ -48,7 +48,7 @@ public class Stopwatch implements ActionListener {
     JLabel shortDescription = new JLabel();
     JLabel longDescription = new JLabel();
     JLabel title = new JLabel();
-    String audioFilePath = "D:\\Pomodoro Timer\\src\\rickastley.wav";
+    String audioFilePath = "D:\\Pomodoro Timer\\src\\soundEffect.wav";
 
     Timer timerPomo = new Timer(1000, new ActionListener() {
 
@@ -125,7 +125,7 @@ public class Stopwatch implements ActionListener {
 
     Stopwatch() {
         title.setBounds(321,26,579,61);
-        title.setText("Let's Focus on Your Task!");
+        title.setText("Focus on Your Task Dude!");
         title.setFont(new Font("Source Sans Pro", Font.BOLD, 40));
         title.setForeground(Color.white);
         title.setBackground(new Color(217, 85, 80, 0));
