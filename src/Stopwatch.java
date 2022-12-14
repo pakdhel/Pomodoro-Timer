@@ -48,7 +48,7 @@ public class Stopwatch implements ActionListener {
     JLabel shortDescription = new JLabel();
     JLabel longDescription = new JLabel();
     JLabel title = new JLabel();
-    String audioFilePath = "D:\\Pomodoro Timer\\src\\soundEffect.wav";
+    String audioFilePath = "E:\\My Project\\Pomodoro-Timer\\src\\alarm.wav";
 
     Timer timerPomo = new Timer(1000, new ActionListener() {
 
@@ -67,8 +67,13 @@ public class Stopwatch implements ActionListener {
 
             if (pomoHours == 0 && pomoMinutes == 0 && pomoSeconds == 0) {
                 pomoStop();
+                totalPomoTimes++;
                 playMusic(audioFilePath);
-                shortStart();
+                if (totalPomoTimes % 4 == 0) {
+                    longStart();
+                } else {
+                    shortStart();
+                }
             }
         }
     });
@@ -112,12 +117,10 @@ public class Stopwatch implements ActionListener {
             shortTimeLabel.setText(shortHours_str+":"+shortMin_str+":"+shortSec_str);
 
             if (shortHours == 0 && shortMinutes == 0 && shortSeconds == 0) {
-                totalPomoTimes++;
+
                 shortStop();
                 playMusic(audioFilePath);
-                if (totalPomoTimes % 4 == 0) {
-                    longStart();
-                }
+
             }
         }
     });
@@ -196,7 +199,7 @@ public class Stopwatch implements ActionListener {
         buttonLongTime.setFocusable(false);
         buttonLongTime.addActionListener(this);
 
-        ImageIcon image = new ImageIcon("D:\\Pomodoro Timer\\src\\clock-hour-9.png");
+        ImageIcon image = new ImageIcon("E:\\My Project\\Pomodoro-Timer\\src\\clock-hour-9.png");
 
         // tabel  output timer
         shortTimeLabel.setText(shortHours_str+":"+shortMin_str+":"+shortSec_str);
@@ -321,7 +324,6 @@ public class Stopwatch implements ActionListener {
                 Clip clip = AudioSystem.getClip();
                 clip.open(audio);
                 clip.start();
-                JOptionPane.showMessageDialog(null,"Press OK to stop Alarm!");
             } else {
                 System.out.println("Can't find the file");
             }
