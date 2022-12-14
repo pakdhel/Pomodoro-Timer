@@ -7,10 +7,11 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class Stopwatch implements ActionListener {
+    private int counter = 0;
     int totalPomoTimes = 0; // total sudah berapa kali istirahat pendek
     JFrame frame = new JFrame();
     JButton startButton = new JButton("START");
-    JButton stopButton = new JButton("STOP");
+    JButton resetButton = new JButton("RESET");
 
     JButton buttonPomoTime = new JButton("ENTER");
     JButton buttonShortTime = new JButton("ENTER");
@@ -96,6 +97,8 @@ public class Stopwatch implements ActionListener {
 
             if (longHours == 0 && longMinutes == 0 && longSeconds == 0) {
                 longStop();
+                counter = 0;
+                startButton.setText("START");
                 playMusic(audioFilePath);
             }
         }
@@ -117,10 +120,10 @@ public class Stopwatch implements ActionListener {
             shortTimeLabel.setText(shortHours_str+":"+shortMin_str+":"+shortSec_str);
 
             if (shortHours == 0 && shortMinutes == 0 && shortSeconds == 0) {
-
                 shortStop();
+                counter = 0;
+                startButton.setText("START");
                 playMusic(audioFilePath);
-
             }
         }
     });
@@ -240,11 +243,11 @@ public class Stopwatch implements ActionListener {
         startButton.addActionListener(this);
 
         // button stop
-        stopButton.setBounds(629,600,176,55);
-        stopButton.setFont(new Font("ArialRounded", Font.BOLD,30));
-        stopButton.setBackground(new Color(217, 217, 217));
-        stopButton.setFocusable(false);
-        stopButton.addActionListener(this);
+        resetButton.setBounds(629,600,176,55);
+        resetButton.setFont(new Font("ArialRounded", Font.BOLD,30));
+        resetButton.setBackground(new Color(217, 217, 217));
+        resetButton.setFocusable(false);
+        resetButton.addActionListener(this);
 
         frame.add(title);
 
@@ -259,7 +262,7 @@ public class Stopwatch implements ActionListener {
         frame.add(shortDescription);
         frame.add(longDescription);
         frame.add(startButton);
-        frame.add(stopButton);
+        frame.add(resetButton);
         frame.add(pomoTimeLabel);
         frame.add(longTimeLabel);
         frame.add(shortTimeLabel);
@@ -300,13 +303,53 @@ public class Stopwatch implements ActionListener {
             if (pomoTotalTimeMillis == 0 || longTotalTimeMillis == 0 || shortTotalTimeMillis == 0) {
                 JOptionPane.showMessageDialog(null,"You must enter the time before you start","Error",JOptionPane.ERROR_MESSAGE);
             } else {
-                pomoStart();
+                counter++;
+                if (counter % 2 != 0) {
+                    pomoStart();
+                    startButton.setText("STOP");
+                } else {
+                    pomoStop();
+                    startButton.setText("START");
+                }
             }
             System.out.println("you press start button");
         }
 
-        if (e.getSource() == stopButton) {
+        if (e.getSource() == resetButton) {
             timerPomo.stop();
+            timerShort.stop();
+            timerLong.stop();
+            pomoTotalTimeMillis = 0;
+            shortTotalTimeMillis = 0;
+            longTotalTimeMillis = 0;
+            pomoSeconds = 0;
+            pomoHours = 0;
+            pomoMinutes = 0;
+            shortSeconds = 0;
+            shortMinutes = 0;
+            shortHours = 0;
+            longSeconds = 0;
+            longMinutes = 0;
+            longHours = 0;
+
+            pomoSec_str = String.format("%02d", pomoSeconds);
+            pomoMin_str = String.format("%02d", pomoMinutes);
+            pomoHours_str = String.format("%02d", pomoHours);
+            pomoTimeLabel.setText(pomoHours_str+":"+pomoMin_str+":"+pomoSec_str);
+
+            shortSec_str = String.format("%02d", shortSeconds);
+            shortMin_str = String.format("%02d", shortMinutes);
+            shortHours_str = String.format("%02d", shortHours);
+            shortTimeLabel.setText(shortHours_str+":"+shortMin_str+":"+shortSec_str);
+
+            longSec_str = String.format("%02d", longSeconds);
+            longMin_str = String.format("%02d", longMinutes);
+            longHours_str = String.format("%02d", longHours);
+            longTimeLabel.setText(longHours_str + ":"+ longMin_str + ":" + longSec_str);
+
+            counter = 0;
+            startButton.setText("START");
+
             System.out.println("you press stop button");
         }
 
